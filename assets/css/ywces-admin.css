@@ -1,0 +1,83 @@
+.ywces-textarea {
+    resize: vertical;
+    width: 100%;
+    min-height: 200px;
+}
+
+.ywces-text {
+    width: 100%;
+}
+
+.ywces-test-email {
+    width: 50% !important;
+}
+
+tr.ywces-collapse {
+    cursor: pointer;
+}
+
+.ywces-collapse td {
+    padding: 10px 10px 10px 20px;
+    font-size: small;
+    font-style: italic;
+    line-height: 20px;
+}
+
+.ywces-collapse .ywces-collapse-sign:after {
+    content: "+";
+    display: block;
+    font-size: 20px;
+    line-height: 20px;
+    height: 20px;
+    width: 20px;
+    text-align: center;
+    border: 1px solid #444444;
+    border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    float: right;
+}
+
+.ywces-collapse.expand .ywces-collapse-sign:after {
+    content: "-";
+    line-height: 16px;
+
+}
+
+.ywces-collapse .ywces-collapse-expanded,
+.ywces-collapse .ywces-collapse-collapsed {
+    display: none;
+    float: right;
+    font-size: 14px;
+    line-height: 20px;
+    margin: 0 5px 0 0;
+    font-style: italic;
+}
+
+.ywces-collapse .ywces-collapse-collapsed {
+    display: block;
+}
+
+.ywces-collapse.expand .ywces-collapse-expanded {
+    display: block;
+}
+
+.ywces-collapse.expand .ywces-collapse-collapsed {
+    display: none;
+}
+
+.form-table td .ywces-coupon {
+    border: 1px solid #cccccc;
+    padding: 0 15px;
+}
+
+.form-table td .ywces-coupon p {
+    margin-top: 13px;
+    margin-bottom: 13px;
+    font-size: 13px;
+}
+
+.form-table td .ywces-coupon p.checkboxes label {
+    display: inline-block;
+    padding: 4px 1em 2px 0;
+}
