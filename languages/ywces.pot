@@ -1,0 +1,306 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: YITH WooCommerce Coupon Email System\n"
+"POT-Creation-Date: 2015-07-13 15:20+0100\n"
+"PO-Revision-Date: 2015-07-13 15:20+0100\n"
+"Last-Translator: \n"
+"Language-Team: Your Inspiration Themes <plugins@yithemes.com>\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.7.4\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;__ngettext:1,2;__ngettext_noop:1,2;"
+"_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: ..\n"
+"X-Poedit-SearchPathExcluded-0: ../plugin-fw\n"
+
+#: ../class.yith-wc-coupon-email-system.php:194
+#: ../class.yith-wc-coupon-email-system.php:198
+msgid "General Settings"
+msgstr ""
+
+#: ../class.yith-wc-coupon-email-system.php:195
+msgid "Mandrill Settings"
+msgstr ""
+
+#: ../class.yith-wc-coupon-email-system.php:202
+msgid "How To"
+msgstr ""
+
+#: ../class.yith-wc-coupon-email-system.php:208
+#: ../class.yith-wc-coupon-email-system.php:209
+msgid "Coupon Email System"
+msgstr ""
+
+#: ../class.yith-wc-coupon-email-system.php:239
+msgid "Test email has been sent successfully!"
+msgstr ""
+
+#: ../class.yith-wc-coupon-email-system.php:240
+msgid "Please insert a valid email address"
+msgstr ""
+
+#: ../class.yith-wc-coupon-email-system.php:241
+msgid "You need to set at least a threshold to send a test email"
+msgstr ""
+
+#: ../class.yith-wc-coupon-email-system.php:242
+msgid "Please select at least a product"
+msgstr ""
+
+#: ../class.yith-wc-coupon-email-system.php:243
+msgid ""
+"You need to select at least the amount/percentage of a coupon to send it in "
+"a test email"
+msgstr ""
+
+#: ../class.yith-wc-coupon-email-system.php:244
+msgid "Please specify the number of days"
+msgstr ""
+
+#: ../class.yith-wc-coupon-email-system.php:263
+msgid ""
+"In order to use some of the features of YITH WooCommerce Coupon Email System "
+"you need to create at least one coupon"
+msgstr ""
+
+#: ../class.yith-wc-coupon-email-system.php:365
+msgid "Placeholder reference"
+msgstr ""
+
+#: ../class.yith-wc-coupon-email-system.php:374
+msgid ""
+"Replaced with the description of the given coupon. This placeholder must be "
+"included."
+msgstr ""
+
+#: ../class.yith-wc-coupon-email-system.php:382
+msgid "Replaced with the site title"
+msgstr ""
+
+#: ../class.yith-wc-coupon-email-system.php:390
+msgid "Replaced with the customer's name"
+msgstr ""
+
+#: ../class.yith-wc-coupon-email-system.php:398
+msgid "Replaced with the customer's last name"
+msgstr ""
+
+#: ../class.yith-wc-coupon-email-system.php:406
+msgid "Replaced with the customer's email"
+msgstr ""
+
+#: ../class.yith-wc-coupon-email-system.php:414
+msgid "Replaced with the date of the order"
+msgstr ""
+
+#: ../class.yith-wc-coupon-email-system.php:425
+msgid "Replaced with the number of purchases"
+msgstr ""
+
+#: ../class.yith-wc-coupon-email-system.php:433
+msgid "Replaced with the amount of money spent by the customer"
+msgstr ""
+
+#: ../class.yith-wc-coupon-email-system.php:441
+msgid "Replaced with the spent amount of money"
+msgstr ""
+
+#: ../class.yith-wc-coupon-email-system.php:449
+msgid "Replaced with the number of days since last purchase"
+msgstr ""
+
+#: ../class.yith-wc-coupon-email-system.php:457
+msgid "Replaced with the name of a purchased product"
+msgstr ""
+
+#: ../class.yith-wc-coupon-email-system.php:514
+msgid "You need to select a coupon to send one for a new user registration"
+msgstr ""
+
+#: ../class.yith-wc-coupon-email-system.php:689
+msgid "Settings"
+msgstr ""
+
+#: ../class.yith-wc-coupon-email-system.php:692
+msgid "Premium Version"
+msgstr ""
+
+#: ../class.yith-wc-coupon-email-system.php:719
+msgid "Plugin Documentation"
+msgstr ""
+
+#: ../includes/class-ywces-ajax.php:117
+msgid "Coupon not valid"
+msgstr ""
+
+#: ../includes/class-ywces-coupon-email.php:49
+msgid "Coupon Mail System"
+msgstr ""
+
+#: ../includes/class-ywces-emails.php:352
+msgid "Coupon code: "
+msgstr ""
+
+#: ../includes/class-ywces-emails.php:365
+#, php-format
+msgid "Coupon amount: %s%s off"
+msgstr ""
+
+#: ../includes/class-ywces-emails.php:367
+msgid "Free shipping"
+msgstr ""
+
+#: ../includes/class-ywces-emails.php:373
+#, php-format
+msgid "Valid for a minimum purchase of %s"
+msgstr ""
+
+#: ../includes/class-ywces-emails.php:376
+#, php-format
+msgid "Valid for a maximum purchase of %s"
+msgstr ""
+
+#: ../includes/class-ywces-emails.php:379
+#, php-format
+msgid "Valid for a minimum purchase of %s and a maximum of %s"
+msgstr ""
+
+#: ../includes/class-ywces-emails.php:386
+msgid "Valid for:"
+msgstr ""
+
+#: ../includes/class-ywces-emails.php:389
+#: ../includes/class-ywces-emails.php:406
+#, php-format
+msgid "Following products: %s"
+msgstr ""
+
+#: ../includes/class-ywces-emails.php:394
+#: ../includes/class-ywces-emails.php:411
+#, php-format
+msgid "Products of the following categories: %s"
+msgstr ""
+
+#: ../includes/class-ywces-emails.php:403
+msgid "Not valid for:"
+msgstr ""
+
+#: ../includes/class-ywces-emails.php:419
+msgid "This coupon cannot be used in conjunction with other coupons"
+msgstr ""
+
+#: ../includes/class-ywces-emails.php:423
+msgid "This coupon will not apply to items on sale"
+msgstr ""
+
+#: ../includes/class-ywces-emails.php:432
+#, php-format
+msgid "Expiration date: %s"
+msgstr ""
+
+#: ../init.php:23
+msgid ""
+"You can't activate the free version of YITH WooCommerce Coupon Email System "
+"while you are using the premium one."
+msgstr ""
+
+#: ../init.php:31
+msgid ""
+"YITH WooCommerce Coupon Email System is enabled but not effective. It "
+"requires WooCommerce in order to work."
+msgstr ""
+
+#: ../plugin-options/general-options.php:20
+msgid "Allowed placeholders:"
+msgstr ""
+
+#: ../plugin-options/general-options.php:21
+msgid "More info"
+msgstr ""
+
+#: ../plugin-options/general-options.php:29
+msgid "Select a coupon"
+msgstr ""
+
+#: ../plugin-options/general-options.php:36
+msgid "Coupon Email System settings"
+msgstr ""
+
+#: ../plugin-options/general-options.php:42
+msgid "Enable YITH WooCommerce Coupon Email System"
+msgstr ""
+
+#: ../plugin-options/general-options.php:49
+msgid "Email type"
+msgstr ""
+
+#: ../plugin-options/general-options.php:51
+msgid "Choose which email format to send."
+msgstr ""
+
+#: ../plugin-options/general-options.php:53
+msgid "HTML"
+msgstr ""
+
+#: ../plugin-options/general-options.php:54
+msgid "Plain text"
+msgstr ""
+
+#: ../plugin-options/general-options.php:65
+msgid "On first purchase"
+msgstr ""
+
+#: ../plugin-options/general-options.php:74
+msgid "Enable coupon sending"
+msgstr ""
+
+#: ../plugin-options/general-options.php:82
+msgid "Selected Coupon"
+msgstr ""
+
+#: ../plugin-options/general-options.php:84
+msgid "Choose the coupon to send"
+msgstr ""
+
+#: ../plugin-options/general-options.php:90
+msgid "Email subject"
+msgstr ""
+
+#: ../plugin-options/general-options.php:94
+msgid "You have received a coupon from {site_title}"
+msgstr ""
+
+#: ../plugin-options/general-options.php:101
+msgid "Email content"
+msgstr ""
+
+#: ../plugin-options/general-options.php:105
+msgid ""
+"Hi {customer_name},\n"
+"thanks for making the first purchase on {order_date} on our shop "
+"{site_title}!\n"
+"Because of this, we would like to offer you this coupon as a little gift:\n"
+"\n"
+"{coupon_description}\n"
+"\n"
+"See you on our shop,\n"
+"\n"
+"{site_title}."
+msgstr ""
+
+#: ../plugin-options/general-options.php:120
+msgid "Test email"
+msgstr ""
+
+#: ../templates/admin/custom-send.php:57
+msgid "Type an email address to send a test email"
+msgstr ""
+
+#: ../templates/admin/custom-send.php:60
+msgid "Send Test Email"
+msgstr ""
