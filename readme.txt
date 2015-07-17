@@ -25,6 +25,8 @@ YITH WooCommerce Coupon Email System helps in that, creating an automatic proces
 * Customize email content using a wide set of options
 * Send test email
 
+Full documentation is available [here](http://yithemes.com/docs-plugins/yith-woocommerce-coupon-email-system/).
+
 
 == Installation ==
 
