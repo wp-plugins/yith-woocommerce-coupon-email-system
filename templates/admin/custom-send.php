@@ -54,10 +54,10 @@ class YWCES_Custom_Send {
                     id="<?php echo esc_attr( $option['field_id'] ); ?>"
                     type="text"
                     class="ywces-test-email"
-                    placeholder="<?php _e( 'Type an email address to send a test email', 'ywces' ) ?>"
+                    placeholder="<?php _e( 'Type an email address to send a test email', 'yith-woocommerce-coupon-email-system' ) ?>"
                     />
 
-                <button type="button" class="button-secondary ywces-send-test-email" <?php echo implode( ' ', $custom_attributes ); ?>><?php _e( 'Send Test Email', 'ywces' ); ?></button>
+                <button type="button" class="button-secondary ywces-send-test-email" <?php echo implode( ' ', $custom_attributes ); ?>><?php _e( 'Send Test Email', 'yith-woocommerce-coupon-email-system' ); ?></button>
                 <?php echo $option['desc']; ?>
             </td>
         </tr>

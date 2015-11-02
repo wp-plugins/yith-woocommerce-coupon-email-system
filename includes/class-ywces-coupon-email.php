@@ -46,7 +46,7 @@ if ( !class_exists( 'YWCES_Coupon_Mail' ) ) {
          */
         public function __construct() {
 
-            $this->title          = __( 'Coupon Mail System', 'ywces' );
+            $this->title          = __( 'Coupon Mail System', 'yith-woocommerce-coupon-email-system' );
             $this->template_html  = '/emails/coupon-email.php';
             $this->template_plain = '/emails/plain/coupon-email.php';
 

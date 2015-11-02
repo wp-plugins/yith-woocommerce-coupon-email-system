@@ -4,8 +4,8 @@
  * Plugin URI: http://yithemes.com/themes/plugins/yith-woocommerce-coupon-email-system/
  * Description: YITH WooCommerce Coupon Email System offers an automatic way to send a coupon to your users according to specific events.
  * Author: YIThemes
- * Text Domain: ywces
- * Version: 1.0.0
+ * Text Domain: yith-woocommerce-coupon-email-system
+ * Version: 1.0.4
  * Author URI: http://yithemes.com/
  */
 
@@ -20,7 +20,7 @@ if ( !function_exists( 'is_plugin_active' ) ) {
 function ywces_install_free_admin_notice() {
     ?>
     <div class="error">
-        <p><?php _e( 'You can\'t activate the free version of YITH WooCommerce Coupon Email System while you are using the premium one.', 'ywces' ); ?></p>
+        <p><?php _e( 'You can\'t activate the free version of YITH WooCommerce Coupon Email System while you are using the premium one.', 'yith-woocommerce-coupon-email-system' ); ?></p>
     </div>
 <?php
 }
@@ -28,13 +28,13 @@ function ywces_install_free_admin_notice() {
 function ywces_install_woocommerce_admin_notice() {
     ?>
     <div class="error">
-        <p><?php _e( 'YITH WooCommerce Coupon Email System is enabled but not effective. It requires WooCommerce in order to work.', 'ywces' ); ?></p>
+        <p><?php _e( 'YITH WooCommerce Coupon Email System is enabled but not effective. It requires WooCommerce in order to work.', 'yith-woocommerce-coupon-email-system' ); ?></p>
     </div>
 <?php
 }
 
 if ( !defined( 'YWCES_VERSION' ) ) {
-    define( 'YWCES_VERSION', '1.0.0' );
+    define( 'YWCES_VERSION', '1.0.4' );
 }
 
 if ( !defined( 'YWCES_FREE_INIT' ) ) {
@@ -61,10 +61,16 @@ if ( !defined( 'YWCES_TEMPLATE_PATH' ) ) {
     define( 'YWCES_TEMPLATE_PATH', YWCES_DIR . 'templates' );
 }
 
+/* Plugin Framework Version Check */
+if( ! function_exists( 'yit_maybe_plugin_fw_loader' ) && file_exists( YWCES_DIR . 'plugin-fw/init.php' ) ) {
+    require_once( YWCES_DIR . 'plugin-fw/init.php' );
+}
+yit_maybe_plugin_fw_loader( YWCES_DIR  );
+
 function ywces_free_init() {
 
     /* Load text domain */
-    load_plugin_textdomain( 'ywces', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+    load_plugin_textdomain( 'yith-woocommerce-coupon-email-system', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 
     /* === Global YITH WooCommerce Coupon Email System  === */
     YITH_WCES();

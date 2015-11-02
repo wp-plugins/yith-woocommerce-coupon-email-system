@@ -146,6 +146,23 @@ jQuery(function ($) {
             $(this).toggleClass('expand').nextUntil('tr.ywces-collapse').slideToggle(100);
         });
 
+        $('#ywces_mail_template_enable').change(function () {
+
+            if ($(this).is(':checked')) {
+
+                $('#ywces_mail_template').val('base').prop("disabled",true);
+                $('.ywces-mailskin').hide();
+
+
+            } else {
+
+                $('#ywces_mail_template').prop("disabled",false);
+                $('.ywces-mailskin').show();
+
+            }
+
+        }).change();
+
     });
 
 });

@@ -155,7 +155,7 @@ if ( !class_exists( 'YWCES_Emails' ) ) {
         public function get_mail_body( $type, $coupon_code, $first_name, $last_name, $user_email, $args = array(), $template = false ) {
 
             if ( !$template ) {
-                $template = get_option( 'ywces_mail_template' );
+                $template = get_option( 'ywces_mail_template', 'base' );
             }
 
             if ( array_key_exists( $template, YITH_WCES()->_email_templates ) ) {
@@ -164,6 +164,14 @@ if ( !class_exists( 'YWCES_Emails' ) ) {
                 $folder = YITH_WCES()->_email_templates[$template]['folder'];
 
                 $styles = include( $path . $folder . '/coupon-description.php' );
+
+            }
+            elseif ( defined( 'YITH_WCET_PREMIUM' ) && get_option( 'ywces_mail_template_enable' ) == 'yes' ) {
+
+                $styles = array('h2'   => '',
+                                'i'    => '',
+                                'a'    => '',
+                                'span' => '');
 
             }
             else {
@@ -179,7 +187,6 @@ if ( !class_exists( 'YWCES_Emails' ) ) {
                 '{site_title}',
                 '{customer_name}',
                 '{customer_last_name}',
-                '{customer_email}',
                 '{customer_email}',
             );
 
@@ -274,6 +281,7 @@ if ( !class_exists( 'YWCES_Emails' ) ) {
          * @since   1.0.0
          *
          * @param   $coupon_code
+         * @param   $styles
          *
          * @return  string
          * @author  Alberto Ruggiero
@@ -348,13 +356,13 @@ if ( !class_exists( 'YWCES_Emails' ) ) {
                     ob_start();
                     ?>
 
-                    <h2 style="<?php echo $styles['h2'] ?>">
-                        <?php echo __( 'Coupon code: ', 'ywces' ) . $coupon->code; ?>
+                    <h2 style="<?php echo $styles['h2'] ?>" class="ywces-h2">
+                        <?php echo __( 'Coupon code: ', 'yith-woocommerce-coupon-email-system' ) . $coupon->code; ?>
                     </h2>
 
                     <?php if ( !empty( $post->post_excerpt ) ) : ?>
 
-                        <i style="<?php echo $styles['i'] ?>">
+                        <i style="<?php echo $styles['i'] ?>" class="ywces-i">
                             <?php echo $post->post_excerpt; ?>
                         </i>
 
@@ -362,21 +370,21 @@ if ( !class_exists( 'YWCES_Emails' ) ) {
 
                     <p>
                         <b>
-                            <?php printf( __( 'Coupon amount: %s%s off', 'ywces' ), $amount, $amount_suffix ); ?>
+                            <?php printf( __( 'Coupon amount: %s%s off', 'yith-woocommerce-coupon-email-system' ), $amount, $amount_suffix ); ?>
                             <?php if ( $coupon->free_shipping == 'yes' ) : ?>
-                                + <?php _e( 'Free shipping', 'ywces' ); ?>
+                                + <?php _e( 'Free shipping', 'yith-woocommerce-coupon-email-system' ); ?>
                                 <br />
                             <?php endif; ?>
                         </b>
-                        <span style="<?php echo $styles['span'] ?>">
+                        <span style="<?php echo $styles['span'] ?>" class="ywces-span">
                             <?php if ( $coupon->minimum_amount != '' && $coupon->maximum_amount == '' ) : ?>
-                                <?php printf( __( 'Valid for a minimum purchase of %s', 'ywces' ), wc_price( $coupon->minimum_amount ) ); ?>
+                                <?php printf( __( 'Valid for a minimum purchase of %s', 'yith-woocommerce-coupon-email-system' ), wc_price( $coupon->minimum_amount ) ); ?>
                             <?php endif; ?>
                             <?php if ( $coupon->minimum_amount == '' && $coupon->maximum_amount != '' ) : ?>
-                                <?php printf( __( 'Valid for a maximum purchase of %s', 'ywces' ), wc_price( $coupon->maximum_amount ) ); ?>
+                                <?php printf( __( 'Valid for a maximum purchase of %s', 'yith-woocommerce-coupon-email-system' ), wc_price( $coupon->maximum_amount ) ); ?>
                             <?php endif; ?>
                             <?php if ( $coupon->minimum_amount != '' && $coupon->maximum_amount != '' ) : ?>
-                                <?php printf( __( 'Valid for a minimum purchase of %s and a maximum of %s', 'ywces' ), wc_price( $coupon->minimum_amount ), wc_price( $coupon->maximum_amount ) ); ?>
+                                <?php printf( __( 'Valid for a minimum purchase of %s and a maximum of %s', 'yith-woocommerce-coupon-email-system' ), wc_price( $coupon->minimum_amount ), wc_price( $coupon->maximum_amount ) ); ?>
                             <?php endif; ?>
                         </span>
                     </p>
@@ -386,12 +394,12 @@ if ( !class_exists( 'YWCES_Emails' ) ) {
                             <b><?php echo __( 'Valid for:' ); ?></b>
                             <br />
                             <?php if ( count( $products ) > 0 ) : ?>
-                                <?php printf( __( 'Following products: %s', 'ywces' ), implode( ',', $products ) ); ?>
+                                <?php printf( __( 'Following products: %s', 'yith-woocommerce-coupon-email-system' ), implode( ',', $products ) ); ?>
                                 <br />
                             <?php endif; ?>
 
                             <?php if ( count( $categories ) > 0 ) : ?>
-                                <?php printf( __( 'Products of the following categories: %s', 'ywces' ), implode( ',', $categories ) ); ?>
+                                <?php printf( __( 'Products of the following categories: %s', 'yith-woocommerce-coupon-email-system' ), implode( ',', $categories ) ); ?>
                                 <br />
                             <?php endif; ?>
 
@@ -403,24 +411,24 @@ if ( !class_exists( 'YWCES_Emails' ) ) {
                             <b><?php echo __( 'Not valid for:' ); ?></b>
                             <br />
                             <?php if ( count( $products_excluded ) > 0 ): ?>
-                                <?php printf( __( 'Following products: %s', 'ywces' ), implode( ',', $products_excluded ) ) ?>
+                                <?php printf( __( 'Following products: %s', 'yith-woocommerce-coupon-email-system' ), implode( ',', $products_excluded ) ) ?>
                                 <br />
                             <?php endif; ?>
 
                             <?php if ( count( $categories_excluded ) > 0 ): ?>
-                                <?php printf( __( 'Products of the following categories: %s', 'ywces' ), implode( ',', $categories_excluded ) ) ?>
+                                <?php printf( __( 'Products of the following categories: %s', 'yith-woocommerce-coupon-email-system' ), implode( ',', $categories_excluded ) ) ?>
                                 <br />
                             <?php endif; ?>
                         </p>
                     <?php endif; ?>
 
-                    <span style="<?php echo $styles['span'] ?>">
+                    <span style="<?php echo $styles['span'] ?>" class="ywces-span">
                         <?php if ( $coupon->individual_use == 'yes' ) : ?>
-                            &bull; <?php _e( 'This coupon cannot be used in conjunction with other coupons', 'ywces' ); ?>
+                            &bull; <?php _e( 'This coupon cannot be used in conjunction with other coupons', 'yith-woocommerce-coupon-email-system' ); ?>
                             <br />
                         <?php endif; ?>
                         <?php if ( $coupon->exclude_sale_items == 'yes' ) : ?>
-                            &bull; <?php _e( 'This coupon will not apply to items on sale', 'ywces' ); ?>
+                            &bull; <?php _e( 'This coupon will not apply to items on sale', 'yith-woocommerce-coupon-email-system' ); ?>
                             <br />
                         <?php endif; ?>
                     </span>
@@ -429,7 +437,7 @@ if ( !class_exists( 'YWCES_Emails' ) ) {
                         <p>
                             <br />
                             <b>
-                                <?php printf( __( 'Expiration date: %s', 'ywces' ), get_date_from_gmt( date( 'Y-m-d H:i:s', $coupon->expiry_date ), get_option( 'date_format' ) ) ); ?>
+                                <?php printf( __( 'Expiration date: %s', 'yith-woocommerce-coupon-email-system' ), get_date_from_gmt( date( 'Y-m-d H:i:s', $coupon->expiry_date ), get_option( 'date_format' ) ) ); ?>
                             </b>
                         </p>
                     <?php endif; ?>
@@ -472,7 +480,7 @@ if ( !class_exists( 'YWCES_Emails' ) ) {
 
             }
 
-            return sprintf( '<a style="' . $style . '" href="%s">%s</a>', $url, $title );
+            return sprintf( '<a class="ywces-a" style="' . $style . '" href="%s">%s</a>', $url, $title );
         }
 
     }

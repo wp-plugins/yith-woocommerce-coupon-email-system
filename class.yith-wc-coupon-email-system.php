@@ -117,7 +117,7 @@ if ( !class_exists( 'YITH_WC_Coupon_Email_System' ) ) {
             );
 
             //Load plugin framework
-            add_action( 'after_setup_theme', array( $this, 'plugin_fw_loader' ), 1 );
+            add_action( 'plugins_loaded', array( $this, 'plugin_fw_loader' ), 12 );
             add_filter( 'plugin_action_links_' . plugin_basename( YWCES_DIR . '/' . basename( YWCES_FILE ) ), array( $this, 'action_links' ) );
             add_filter( 'plugin_row_meta', array( $this, 'plugin_row_meta' ), 10, 4 );
 
@@ -134,11 +134,13 @@ if ( !class_exists( 'YITH_WC_Coupon_Email_System' ) ) {
                 add_action( 'admin_menu', array( $this, 'add_menu_page' ), 5 );
                 add_action( 'yith_coupon_email_system_premium', array( $this, 'premium_tab' ) );
                 add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ) );
-                add_action( 'woocommerce_update_option', array( $this, 'check_active_options' ), 10, 1 );
+                add_action( 'admin_notices', array( $this, 'check_active_options' ), 10 );
 
                 //Custom Fields
                 add_action( 'woocommerce_admin_field_ywces-send', 'YWCES_Custom_Send::output' );
                 add_action( 'woocommerce_admin_field_ywces-textarea', 'YWCES_Custom_Textarea::output' );
+
+                add_filter( 'woocommerce_admin_settings_sanitize_option', array( $this, 'save_ywces_textarea' ), 10, 3 );
 
             }
 
@@ -191,22 +193,22 @@ if ( !class_exists( 'YITH_WC_Coupon_Email_System' ) ) {
             }
 
             if ( defined( 'YWCES_PREMIUM' ) ) {
-                $admin_tabs['premium-general'] = __( 'General Settings', 'ywces' );
-                $admin_tabs['mandrill']        = __( 'Mandrill Settings', 'ywces' );
+                $admin_tabs['premium-general'] = __( 'General Settings', 'yith-woocommerce-coupon-email-system' );
+                $admin_tabs['mandrill']        = __( 'Mandrill Settings', 'yith-woocommerce-coupon-email-system' );
             }
             else {
-                $admin_tabs['general']         = __( 'General Settings', 'ywces' );
-                $admin_tabs['premium-landing'] = __( 'Premium Version', 'ywces' );
+                $admin_tabs['general']         = __( 'General Settings', 'yith-woocommerce-coupon-email-system' );
+                $admin_tabs['premium-landing'] = __( 'Premium Version', 'yith-woocommerce-coupon-email-system' );
             }
 
-            $admin_tabs['howto'] = __( 'How To', 'ywces' );
+            $admin_tabs['howto'] = __( 'How To', 'yith-woocommerce-coupon-email-system' );
 
 
             $args = array(
                 'create_menu_page' => true,
                 'parent_slug'      => '',
-                'page_title'       => __( 'Coupon Email System', 'ywces' ),
-                'menu_title'       => __( 'Coupon Email System', 'ywces' ),
+                'page_title'       => __( 'Coupon Email System', 'yith-woocommerce-coupon-email-system' ),
+                'menu_title'       => __( 'Coupon Email System', 'yith-woocommerce-coupon-email-system' ),
                 'capability'       => 'manage_options',
                 'parent'           => '',
                 'parent_page'      => 'yit_plugin_panel',
@@ -235,9 +237,9 @@ if ( !class_exists( 'YITH_WC_Coupon_Email_System' ) ) {
             wp_enqueue_script( 'ywces-admin', YWCES_ASSETS_URL . '/js/ywces-admin' . $suffix . '.js' );
 
             $params = apply_filters( 'ywces_admin_scripts_filter', array(
-                'ajax_url'               => admin_url( 'admin-ajax.php' ),
-                'after_send_test_email'  => __( 'Test email has been sent successfully!', 'ywces' ),
-                'test_mail_wrong'        => __( 'Please insert a valid email address', 'ywces' )
+                'ajax_url'              => admin_url( 'admin-ajax.php' ),
+                'after_send_test_email' => __( 'Test email has been sent successfully!', 'yith-woocommerce-coupon-email-system' ),
+                'test_mail_wrong'       => __( 'Please insert a valid email address', 'yith-woocommerce-coupon-email-system' )
             ) );
 
             wp_localize_script( 'ywces-admin', 'ywces_admin', $params );
@@ -256,7 +258,7 @@ if ( !class_exists( 'YITH_WC_Coupon_Email_System' ) ) {
             if ( count( $this->_available_coupons ) == 0 ): ?>
                 <div class="error">
                     <p>
-                        <?php _e( 'In order to use some of the features of YITH WooCommerce Coupon Email System you need to create at least one coupon', 'ywces' ); ?>
+                        <?php _e( 'In order to use some of the features of YITH WooCommerce Coupon Email System you need to create at least one coupon', 'yith-woocommerce-coupon-email-system' ); ?>
                     </p>
                 </div>
             <?php endif;
@@ -296,7 +298,7 @@ if ( !class_exists( 'YITH_WC_Coupon_Email_System' ) ) {
         public function get_email_header( $email_heading, $template = false ) {
 
             if ( !$template ) {
-                $template = get_option( 'ywces_mail_template' );
+                $template = get_option( 'ywces_mail_template', 'base' );
             }
 
             if ( array_key_exists( $template, $this->_email_templates ) ) {
@@ -329,7 +331,7 @@ if ( !class_exists( 'YITH_WC_Coupon_Email_System' ) ) {
             $site_url  = get_option( 'siteurl' );
 
             if ( !$template ) {
-                $template = get_option( 'ywces_mail_template' );
+                $template = get_option( 'ywces_mail_template', 'base' );
             }
 
             if ( array_key_exists( $template, $this->_email_templates ) ) {
@@ -358,7 +360,7 @@ if ( !class_exists( 'YITH_WC_Coupon_Email_System' ) ) {
             ?>
             <div id="plugin-fw-wc">
                 <h3>
-                    <?php _e( 'Placeholder reference', 'ywces' ); ?>
+                    <?php _e( 'Placeholder reference', 'yith-woocommerce-coupon-email-system' ); ?>
                 </h3>
                 <table class="form-table">
                     <tbody>
@@ -367,7 +369,7 @@ if ( !class_exists( 'YITH_WC_Coupon_Email_System' ) ) {
                             <b>{coupon_description}</b>
                         </th>
                         <td class="forminp">
-                            <?php _e( 'Replaced with the description of the given coupon. This placeholder must be included.', 'ywces' ); ?>
+                            <?php _e( 'Replaced with the description of the given coupon. This placeholder must be included.', 'yith-woocommerce-coupon-email-system' ); ?>
                         </td>
                     </tr>
                     <tr valign="top">
@@ -375,7 +377,7 @@ if ( !class_exists( 'YITH_WC_Coupon_Email_System' ) ) {
                             <b>{site_title}</b>
                         </th>
                         <td class="forminp">
-                            <?php _e( 'Replaced with the site title', 'ywces' ); ?>
+                            <?php _e( 'Replaced with the site title', 'yith-woocommerce-coupon-email-system' ); ?>
                         </td>
                     </tr>
                     <tr valign="top">
@@ -383,7 +385,7 @@ if ( !class_exists( 'YITH_WC_Coupon_Email_System' ) ) {
                             <b>{customer_name}</b>
                         </th>
                         <td class="forminp">
-                            <?php _e( 'Replaced with the customer\'s name', 'ywces' ) ?>
+                            <?php _e( 'Replaced with the customer\'s name', 'yith-woocommerce-coupon-email-system' ) ?>
                         </td>
                     </tr>
                     <tr valign="top">
@@ -391,7 +393,7 @@ if ( !class_exists( 'YITH_WC_Coupon_Email_System' ) ) {
                             <b>{customer_last_name}</b>
                         </th>
                         <td class="forminp">
-                            <?php _e( 'Replaced with the customer\'s last name', 'ywces' ) ?>
+                            <?php _e( 'Replaced with the customer\'s last name', 'yith-woocommerce-coupon-email-system' ) ?>
                         </td>
                     </tr>
                     <tr valign="top">
@@ -399,7 +401,7 @@ if ( !class_exists( 'YITH_WC_Coupon_Email_System' ) ) {
                             <b>{customer_email}</b>
                         </th>
                         <td class="forminp">
-                            <?php _e( 'Replaced with the customer\'s email', 'ywces' ) ?>
+                            <?php _e( 'Replaced with the customer\'s email', 'yith-woocommerce-coupon-email-system' ) ?>
                         </td>
                     </tr>
                     <tr valign="top">
@@ -407,7 +409,7 @@ if ( !class_exists( 'YITH_WC_Coupon_Email_System' ) ) {
                             <b>{order_date}</b>
                         </th>
                         <td class="forminp">
-                            <?php _e( 'Replaced with the date of the order', 'ywces' ) ?>
+                            <?php _e( 'Replaced with the date of the order', 'yith-woocommerce-coupon-email-system' ) ?>
                         </td>
                     </tr>
 
@@ -418,7 +420,7 @@ if ( !class_exists( 'YITH_WC_Coupon_Email_System' ) ) {
                                 <b>{purchases_threshold}</b>
                             </th>
                             <td class="forminp">
-                                <?php _e( 'Replaced with the number of purchases', 'ywces' ) ?>
+                                <?php _e( 'Replaced with the number of purchases', 'yith-woocommerce-coupon-email-system' ) ?>
                             </td>
                         </tr>
                         <tr valign="top">
@@ -426,7 +428,7 @@ if ( !class_exists( 'YITH_WC_Coupon_Email_System' ) ) {
                                 <b>{customer_money_spent}</b>
                             </th>
                             <td class="forminp">
-                                <?php _e( 'Replaced with the amount of money spent by the customer', 'ywces' ) ?>
+                                <?php _e( 'Replaced with the amount of money spent by the customer', 'yith-woocommerce-coupon-email-system' ) ?>
                             </td>
                         </tr>
                         <tr valign="top">
@@ -434,7 +436,7 @@ if ( !class_exists( 'YITH_WC_Coupon_Email_System' ) ) {
                                 <b>{spending_threshold}</b>
                             </th>
                             <td class="forminp">
-                                <?php _e( 'Replaced with the spent amount of money', 'ywces' ) ?>
+                                <?php _e( 'Replaced with the spent amount of money', 'yith-woocommerce-coupon-email-system' ) ?>
                             </td>
                         </tr>
                         <tr valign="top">
@@ -442,7 +444,7 @@ if ( !class_exists( 'YITH_WC_Coupon_Email_System' ) ) {
                                 <b>{days_ago}</b>
                             </th>
                             <td class="forminp">
-                                <?php _e( 'Replaced with the number of days since last purchase', 'ywces' ) ?>
+                                <?php _e( 'Replaced with the number of days since last purchase', 'yith-woocommerce-coupon-email-system' ) ?>
                             </td>
                         </tr>
                         <tr valign="top">
@@ -450,7 +452,7 @@ if ( !class_exists( 'YITH_WC_Coupon_Email_System' ) ) {
                                 <b>{purchased_product}</b>
                             </th>
                             <td class="forminp">
-                                <?php _e( 'Replaced with the name of a purchased product', 'ywces' ) ?>
+                                <?php _e( 'Replaced with the name of a purchased product', 'yith-woocommerce-coupon-email-system' ) ?>
                             </td>
                         </tr>
 
@@ -492,22 +494,19 @@ if ( !class_exists( 'YITH_WC_Coupon_Email_System' ) ) {
          * Check if active options have a coupon assigned
          *
          * @since   1.0.0
-         *
-         * @param   $option
-         *
          * @return  void
          * @author  Alberto Ruggiero
          */
-        public function check_active_options( $option ) {
+        public function check_active_options() {
 
-            if ( 'ywces_enable_register' == $option['id'] && isset( $_POST[$option['id']] ) && '1' == $_POST[$option['id']] ) {
+            if ( isset( $_POST['ywces_enable_register'] ) && '1' == $_POST['ywces_enable_register'] ) {
 
                 if ( $_POST['ywces_coupon_register'] == '' ) :
 
                     ?>
                     <div class="error">
                         <p>
-                            <?php _e( 'You need to select a coupon to send one for a new user registration', 'ywces' ); ?>
+                            <?php _e( 'You need to select a coupon to send one for a new user registration', 'yith-woocommerce-coupon-email-system' ); ?>
                         </p>
                     </div>
                 <?php
@@ -580,6 +579,8 @@ if ( !class_exists( 'YITH_WC_Coupon_Email_System' ) ) {
 
                         if ( $this->check_if_coupon_exists( $coupon_code ) ) {
 
+                            $this->bind_coupon( $coupon_code, $order->billing_email );
+
                             YWCES_Emails()->prepare_coupon_mail( $customer_id, 'first_purchase', $coupon_code );
 
                         }
@@ -592,9 +593,54 @@ if ( !class_exists( 'YITH_WC_Coupon_Email_System' ) ) {
 
             }
 
-            if ( defined('YWCES_PREMIUM')) {
-                $this->ywces_user_purchase_premium( $order, $customer_id, $order_count);
+            if ( defined( 'YWCES_PREMIUM' ) ) {
+                $this->ywces_user_purchase_premium( $order, $customer_id, $order_count );
             }
+
+        }
+
+        /**
+         * Saves custom textarea content
+         *
+         * @since   1.0.1
+         *
+         * @param   $value
+         * @param   $option
+         * @param   $raw_value
+         *
+         * @return  string
+         * @author  Alberto ruggiero
+         */
+        public function save_ywces_textarea( $value, $option, $raw_value ) {
+
+            if ( $option['type'] == 'ywces-textarea' ) {
+                $value = wp_kses_post( trim( $raw_value ) );
+
+            }
+
+            return $value;
+
+        }
+
+        /**
+         * Add user email to coupon allowed emails
+         *
+         * @since   1.0.4
+         *
+         * @param   $coupon_code
+         * @param   $email
+         *
+         * @return  string
+         * @author  Alberto ruggiero
+         */
+        public function bind_coupon( $coupon_code, $email ) {
+
+            $coupon         = new WC_Coupon( $coupon_code );
+            $valid_emails   = get_post_meta( $coupon->id, 'customer_email', true );
+            $valid_emails[] = $email;
+
+            update_post_meta( $coupon->id, 'customer_email', $valid_emails );
+            update_post_meta( $coupon->id, 'usage_limit_per_user', '1' );
 
         }
 
@@ -610,8 +656,12 @@ if ( !class_exists( 'YITH_WC_Coupon_Email_System' ) ) {
          * @author  Andrea Grillo <andrea.grillo@yithemes.com>
          */
         public function plugin_fw_loader() {
-            if ( !defined( 'YIT' ) || !defined( 'YIT_CORE_PLUGIN' ) ) {
-                require_once( 'plugin-fw/yit-plugin.php' );
+            if ( !defined( 'YIT_CORE_PLUGIN' ) ) {
+                global $plugin_fw_data;
+                if ( !empty( $plugin_fw_data ) ) {
+                    $plugin_fw_file = array_shift( $plugin_fw_data );
+                    require_once( $plugin_fw_file );
+                }
             }
         }
 
@@ -639,7 +689,7 @@ if ( !class_exists( 'YITH_WC_Coupon_Email_System' ) ) {
          * @author  Andrea Grillo <andrea.grillo@yithemes.com>
          */
         public function get_premium_landing_uri() {
-            return defined( 'YITH_REFER_ID' ) ? $this->_premium_landing . '?refer_id=' . YITH_REFER_ID : $this->_premium_landing . '?refer_id=1030585';
+            return defined( 'YITH_REFER_ID' ) ? $this->_premium_landing . '?refer_id=' . YITH_REFER_ID : $this->_premium_landing;
         }
 
         /**
@@ -656,10 +706,10 @@ if ( !class_exists( 'YITH_WC_Coupon_Email_System' ) ) {
          */
         public function action_links( $links ) {
 
-            $links[] = '<a href="' . admin_url( "admin.php?page={$this->_panel_page}" ) . '">' . __( 'Settings', 'ywces' ) . '</a>';
+            $links[] = '<a href="' . admin_url( "admin.php?page={$this->_panel_page}" ) . '">' . __( 'Settings', 'yith-woocommerce-coupon-email-system' ) . '</a>';
 
             if ( defined( 'YWCES_FREE_INIT' ) ) {
-                $links[] = '<a href="' . $this->get_premium_landing_uri() . '" target="_blank">' . __( 'Premium Version', 'ywces' ) . '</a>';
+                $links[] = '<a href="' . $this->get_premium_landing_uri() . '" target="_blank">' . __( 'Premium Version', 'yith-woocommerce-coupon-email-system' ) . '</a>';
             }
 
             return $links;
@@ -686,7 +736,7 @@ if ( !class_exists( 'YITH_WC_Coupon_Email_System' ) ) {
                 ( defined( 'YWCES_FREE_INIT' ) && ( YWCES_FREE_INIT == $plugin_file ) )
             ) {
 
-                $plugin_meta[] = '<a href="' . $this->_official_documentation . '" target="_blank">' . __( 'Plugin Documentation', 'ywces' ) . '</a>';
+                $plugin_meta[] = '<a href="' . $this->_official_documentation . '" target="_blank">' . __( 'Plugin Documentation', 'yith-woocommerce-coupon-email-system' ) . '</a>';
             }
 
             return $plugin_meta;

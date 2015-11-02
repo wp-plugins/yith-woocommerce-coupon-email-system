@@ -21,8 +21,27 @@ if ( !defined( 'ABSPATH' ) ) {
  * @author  Your Inspiration Themes
  */
 
-do_action( 'ywces_email_header', $email_heading, $template );
+if ( defined( 'YITH_WCET_PREMIUM' ) && get_option( 'ywces_mail_template_enable' ) == 'yes' ) {
+
+    do_action( 'yith_wcet_email_header', $email_heading, 'yith-coupon-email-system' );
+
+}
+else {
+
+    do_action( 'ywces_email_header', $email_heading, $template );
+
+}
 
 echo $mail_body;
 
-do_action( 'ywces_email_footer', $template );
+
+if ( defined( 'YITH_WCET_PREMIUM' ) && get_option( 'ywces_mail_template_enable' ) == 'yes' ) {
+
+    do_action( 'yith_wcet_email_footer', 'yith-coupon-email-system' );
+
+}
+else {
+
+    do_action( 'ywces_email_footer', $template );
+
+}

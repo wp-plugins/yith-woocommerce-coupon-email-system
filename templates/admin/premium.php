@@ -213,17 +213,17 @@
         <div class="landing-container">
             <div class="premium-cta">
                 <p>
-                    <?php echo sprintf( __('Upgrade to %1$spremium version%2$s of %1$sYITH WooCommerce Coupon Email System%2$s to benefit from all features!','ywces'),'<span class="highlight">','</span>' );?>
+                    <?php echo sprintf( __('Upgrade to %1$spremium version%2$s of %1$sYITH WooCommerce Coupon Email System%2$s to benefit from all features!','yith-woocommerce-coupon-email-system'),'<span class="highlight">','</span>' );?>
                 </p>
                 <a href="<?php echo $this->get_premium_landing_uri() ?>" target="_blank" class="premium-cta-button button btn">
-                    <span class="highlight"><?php _e('UPGRADE','ywces');?></span>
-                    <span><?php _e('to the premium version','ywces');?></span>
+                    <span class="highlight"><?php _e('UPGRADE','yith-woocommerce-coupon-email-system');?></span>
+                    <span><?php _e('to the premium version','yith-woocommerce-coupon-email-system');?></span>
                 </a>
             </div>
         </div>
     </div>
     <div class="one section section-even clear">
-        <h1><?php _e('Premium Features','ywces');?></h1>
+        <h1><?php _e('Premium Features','yith-woocommerce-coupon-email-system');?></h1>
         <div class="landing-container">
             <div class="col-1">
                 <img src="<?php echo YWCES_ASSETS_URL?>/images/01.png" alt="User email coupon" />
@@ -231,10 +231,10 @@
             <div class="col-2">
                 <div class="section-title">
                     <img src="<?php echo YWCES_ASSETS_URL?>/images/01-icon.png" alt="icon 01"/>
-                    <h2><?php _e('CUDDLE YOUR CUSTOMERS','ywces');?></h2>
+                    <h2><?php _e('CUDDLE YOUR CUSTOMERS','yith-woocommerce-coupon-email-system');?></h2>
                 </div>
                 <p>
-                    <?php echo sprintf(__('Make your customers feel important, it is the only way to make business in the difficult world of the competition. Give them a warm welcome sending a coupon for their %1$snew registration%2$s, in order to encourage them to make their first purchase on your shop.%3$sAnd if you would like to wish your users a %1$shappy birthday%2$s, you can also take advantage of the chance to send a %1$scoupon%2$s as a gift for their special day. ! ', 'ywces'), '<b>', '</b>','<br>');?>
+                    <?php echo sprintf(__('Make your customers feel important, it is the only way to make business in the difficult world of the competition. Give them a warm welcome sending a coupon for their %1$snew registration%2$s, in order to encourage them to make their first purchase on your shop.%3$sAnd if you would like to wish your users a %1$shappy birthday%2$s, you can also take advantage of the chance to send a %1$scoupon%2$s as a gift for their special day. ! ', 'yith-woocommerce-coupon-email-system'), '<b>', '</b>','<br>');?>
                 </p>
             </div>
         </div>
@@ -244,10 +244,10 @@
             <div class="col-2">
                 <div class="section-title">
                     <img src="<?php echo YWCES_ASSETS_URL?>/images/02-icon.png" alt="icon 02" />
-                    <h2><?php _e('COMMEND USERS\' PURCHASES','ywces');?></h2>
+                    <h2><?php _e('COMMEND USERS\' PURCHASES','yith-woocommerce-coupon-email-system');?></h2>
                 </div>
                 <p>
-                    <?php echo sprintf(__('Exploit the possibilities of the plugin to support more and more your users to purchase in your shop.%3$sReward with a coupon all the users that have reached a %1$sspecific spent amount%2$s in your shop, those who have made a certain %1$snumber of orders%2$s, or who have purchased some particular products.%3$sEven those who don\'t come back soon must be remembered: create and set a coupon to send to those users that didn\'t make a purchase since a specific number of days.', 'ywces'), '<b>', '</b>','<br>');?>
+                    <?php echo sprintf(__('Exploit the possibilities of the plugin to support more and more your users to purchase in your shop.%3$sReward with a coupon all the users that have reached a %1$sspecific spent amount%2$s in your shop, those who have made a certain %1$snumber of orders%2$s, or who have purchased some particular products.%3$sEven those who don\'t come back soon must be remembered: create and set a coupon to send to those users that didn\'t make a purchase since a specific number of days.', 'yith-woocommerce-coupon-email-system'), '<b>', '</b>','<br>');?>
                 </p>
             </div>
             <div class="col-1">
@@ -263,10 +263,10 @@
             <div class="col-2">
                 <div class="section-title">
                     <img src="<?php echo YWCES_ASSETS_URL?>/images/03-icon.png" alt="icon 03" />
-                    <h2><?php _e( '4 EMAIL TEMPLATES','ywces');?></h2>
+                    <h2><?php _e( '4 EMAIL TEMPLATES','yith-woocommerce-coupon-email-system');?></h2>
                 </div>
                 <p>
-                    <?php echo sprintf(__('%1$sCustomize the layout of the generated emails%2$s for the sending of the coupons choosing among four different templates: you can find the best solution for your needs. In the end, every nice gift deserves a good package.', 'ywces'), '<b>', '</b>');?>
+                    <?php echo sprintf(__('%1$sCustomize the layout of the generated emails%2$s for the sending of the coupons choosing among four different templates: you can find the best solution for your needs. In the end, every nice gift deserves a good package.', 'yith-woocommerce-coupon-email-system'), '<b>', '</b>');?>
                 </p>
             </div>
         </div>
@@ -276,10 +276,10 @@
             <div class="col-2">
                 <div class="section-title">
                     <img src="<?php echo YWCES_ASSETS_URL?>/images/04-icon.png" alt="icon 04" />
-                    <h2><?php _e('SEND EMAIL WITH MANDRILL','ywces');?></h2>
+                    <h2><?php _e('SEND EMAIL WITH MANDRILL','yith-woocommerce-coupon-email-system');?></h2>
                 </div>
                 <p>
-                    <?php echo sprintf(__('Use the powerful email service of %1$sMandrill%2$s to manage the sending of your coupons to your shop users.%3$sAn integration to those who want to use the best tool for their work.', 'ywces'), '<b>', '</b>','<br>');?>
+                    <?php echo sprintf(__('Use the powerful email service of %1$sMandrill%2$s to manage the sending of your coupons to your shop users.%3$sAn integration to those who want to use the best tool for their work.', 'yith-woocommerce-coupon-email-system'), '<b>', '</b>','<br>');?>
                 </p>
             </div>
             <div class="col-1">
@@ -291,11 +291,11 @@
         <div class="landing-container">
             <div class="premium-cta">
                 <p>
-                    <?php echo sprintf( __('Upgrade to %1$spremium version%2$s of %1$sYITH WooCommerce Coupon Email System%2$s to benefit from all features!','ywces'),'<span class="highlight">','</span>' );?>
+                    <?php echo sprintf( __('Upgrade to %1$spremium version%2$s of %1$sYITH WooCommerce Coupon Email System%2$s to benefit from all features!','yith-woocommerce-coupon-email-system'),'<span class="highlight">','</span>' );?>
                 </p>
                 <a href="<?php echo $this->get_premium_landing_uri() ?>" target="_blank" class="premium-cta-button button btn">
-                    <span class="highlight"><?php _e('UPGRADE','ywces');?></span>
-                    <span><?php _e('to the premium version','ywces');?></span>
+                    <span class="highlight"><?php _e('UPGRADE','yith-woocommerce-coupon-email-system');?></span>
+                    <span><?php _e('to the premium version','yith-woocommerce-coupon-email-system');?></span>
                 </a>
             </div>
         </div>

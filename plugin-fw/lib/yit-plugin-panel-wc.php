@@ -38,6 +38,11 @@ if ( ! class_exists( 'YIT_Plugin_Panel_WooCommerce' ) ) {
         public $settings = array();
 
         /**
+         * @var array a setting list of parameters
+         */
+        public $wc_type = array();
+
+        /**
          * @var array
          */
         protected $_tabs_path_files;
@@ -50,6 +55,14 @@ if ( ! class_exists( 'YIT_Plugin_Panel_WooCommerce' ) ) {
          * @author   Antonio La Rocca   <antonio.larocca@yithemes.com>
          */
         public function __construct( $args = array() ) {
+
+            $this->wc_type = array(
+                'checkbox',
+                'textarea',
+                'multiselect',
+                'multi_select_countries',
+                'image_width'
+            );
 
             if ( ! empty( $args ) ) {
                 $this->settings         = $args;
@@ -64,10 +77,14 @@ if ( ! class_exists( 'YIT_Plugin_Panel_WooCommerce' ) ) {
                 add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
                 add_action( 'admin_init', array( $this, 'woocommerce_update_options' ) );
 	            add_filter( 'woocommerce_screen_ids', array( $this, 'add_allowed_screen_id' ) );
+                add_filter( 'woocommerce_admin_settings_sanitize_option', array( $this, 'maybe_unserialize_panel_data' ), 10, 3 );
 
                 /* Add VideoBox and InfoBox */
                 add_action( 'woocommerce_admin_field_boxinfo', array( $this, 'add_infobox' ), 10, 1 );
                 add_action( 'woocommerce_admin_field_videobox', array( $this, 'add_videobox' ), 10, 1 );
+
+                /* WooCommerce 2.4 Support */
+                add_filter( 'admin_body_class', array( $this, 'admin_body_class' ) );
             }
         }
 
@@ -251,11 +268,36 @@ if ( ! class_exists( 'YIT_Plugin_Panel_WooCommerce' ) ) {
                 $yit_options = $this->get_main_array_options();
                 $current_tab = $this->get_current_tab();
 
+                if( version_compare( WC()->version, '2.4.0', '>=' ) ) {
+                    if ( ! empty( $yit_options[ $current_tab ] ) ) {
+                        foreach ( $yit_options[ $current_tab ] as $option ) {
+                            if ( isset( $option['id'] ) && isset( $_POST[ $option['id'] ] ) && isset( $option['type' ] ) && ! in_array( $option['type'], $this->wc_type ) ) {
+                                $_POST[ $option['id'] ] = maybe_serialize( $_POST[ $option['id'] ] );
+                            }
+                        }
+                    }
+                }
+
+                foreach($_POST as $name => $value) {
+
+                    //  Check if current POST var which name ends with a specific needle
+                    $attachment_id_needle = "-yith-attachment-id";
+                    $is_hidden_input = (($temp = strlen($name) - strlen($attachment_id_needle)) >= 0 && strpos($name, $attachment_id_needle, $temp) !== FALSE);
+                    if ($is_hidden_input){
+                        //  Is an input element of type "hidden" coupled with an input element for selecting an element from the media gallery
+                        $yit_options[ $current_tab ][$name] = array(
+                            "type" => "text",
+                            "id" => $name
+                        );
+                    }
+                }
+                
                 woocommerce_update_options( $yit_options[ $current_tab ] );
 
                 do_action( 'yit_panel_wc_after_update' );
 
-            } elseif( isset( $_REQUEST['yit-action'] ) && $_REQUEST['yit-action'] == 'wc-options-reset' ){
+            } elseif( isset( $_REQUEST['yit-action'] ) && $_REQUEST['yit-action'] == 'wc-options-reset'
+                && isset( $_POST['yith_wc_reset_options_nonce'] ) && wp_verify_nonce( $_POST['yith_wc_reset_options_nonce'], 'yith_wc_reset_options_'.$this->settings['page'] )){
 
                 $yit_options = $this->get_main_array_options();
                 $current_tab = $this->get_current_tab();
@@ -285,7 +327,6 @@ if ( ! class_exists( 'YIT_Plugin_Panel_WooCommerce' ) ) {
             wp_enqueue_style( 'woocommerce_admin_styles', $woocommerce->plugin_url() . '/assets/css/admin.css', array(), $woocommerce->version );
             wp_enqueue_style( 'yit-plugin-style', YIT_CORE_PLUGIN_URL . '/assets/css/yit-plugin-panel.css', $woocommerce->version );
             wp_enqueue_style ( 'wp-jquery-ui-dialog' );
-
 
             wp_enqueue_style( 'jquery-chosen', YIT_CORE_PLUGIN_URL . '/assets/css/chosen/chosen.css' );
             wp_enqueue_script( 'jquery-chosen', YIT_CORE_PLUGIN_URL . '/assets/js/chosen/chosen.jquery.js', array( 'jquery' ), '1.1.0', true );
@@ -320,7 +361,6 @@ if ( ! class_exists( 'YIT_Plugin_Panel_WooCommerce' ) ) {
                         } else {
                             add_option($value['id'], $default_value);
                         }
-
                     }
 
                 }
@@ -328,6 +368,51 @@ if ( ! class_exists( 'YIT_Plugin_Panel_WooCommerce' ) ) {
 
         }
 
+        /**
+         * Add the woocommerce body class in plugin panel page
+         *
+         * @author Andrea Grillo <andrea.grillo@yithemes.com>
+         * @since 2.0
+         * @param $classes The body classes
+         *
+         * @return array Filtered body classes
+         */
+        public function admin_body_class( $admin_body_classes ){
+            global $pagenow;
+            return 'admin.php' == $pagenow && substr_count( $admin_body_classes, 'woocommerce' ) == 0 ? $admin_body_classes .= ' woocommerce ' : $admin_body_classes;
+        }
+
+        /**
+         * Maybe unserialize panel data
+         *
+         * @param $value     mixed  Option value
+         * @param $option    mixed  Option settings array
+         * @param $raw_value string Raw option value
+         *
+         * @return mixed Filtered return value
+         * @author Antonio La Rocca <antonio.larocca@yithemes.com>
+         * @since 2.0
+         */
+        public function maybe_unserialize_panel_data( $value, $option, $raw_value ) {
+
+
+            if( ! version_compare( WC()->version, '2.4.0', '>='  ) || ! isset( $option['type' ] ) || in_array( $option['type'], $this->wc_type ) ) {
+                return $value;
+            }
+
+            $yit_options = $this->get_main_array_options();
+            $current_tab = $this->get_current_tab();
+
+            if( ! empty( $yit_options[ $current_tab ] ) ){
+                foreach( $yit_options[ $current_tab ] as $option_array ){
+                    if( isset( $option_array['id'] ) && isset( $option['id'] ) && $option_array['id'] == $option['id'] ){
+                        return maybe_unserialize( $value );
+                    }
+                }
+            }
+
+            return $value;
+        }
 
     }
 }

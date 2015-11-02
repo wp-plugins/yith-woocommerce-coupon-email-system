@@ -114,7 +114,7 @@ if ( !class_exists( 'YWCES_Ajax' ) ) {
                 }
                 else {
 
-                    wp_send_json( array( 'error' => __( 'Coupon not valid', 'ywces' ) ) );
+                    wp_send_json( array( 'error' => __( 'Coupon not valid', 'yith-woocommerce-coupon-email-system' ) ) );
 
                 }
 
